@@ -9,12 +9,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.content.Context;
 
 public class MainActivity extends AppCompatActivity {
     Button start;
     Button scan;
-    PendingIntent pendingIntent;
-    AlarmManager alarmManager;
+    public static PendingIntent pendingIntent;
+    public static AlarmManager alarmManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { stopAlert(); }
+            public void onClick(View view) { stopAlert(MainActivity.this); }
         });
     }
 
@@ -48,14 +49,17 @@ public class MainActivity extends AppCompatActivity {
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
                 + (i * 1000), pendingIntent);
         Toast.makeText(this, "Alarm set in " + i + " seconds", Toast.LENGTH_LONG).show();
+
+        Intent switchIntent = new Intent(MainActivity.this, MainActivity2.class);
+        startActivity(switchIntent);
     }
 
     // disable muting the alarm!
 
-    public void stopAlert() {
-        alarmManager.cancel(this.pendingIntent);
+    public static void stopAlert(Context context) {
+        alarmManager.cancel(pendingIntent);
         MyBroadcastReceiver.makeQuiet();
-        Toast.makeText(this, "Alarm stopped",Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Alarm stopped",Toast.LENGTH_LONG).show();
     }
 
 }

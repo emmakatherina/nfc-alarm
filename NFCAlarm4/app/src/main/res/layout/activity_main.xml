@@ -73,7 +73,7 @@
             android:layout_column="1"
             android:layout_margin="10pt"
             android:layout_gravity="top|right"
-            android:text="Scan To Stop" />
+            android:text="Stop" />
 
     </GridLayout>
 </RelativeLayout>
