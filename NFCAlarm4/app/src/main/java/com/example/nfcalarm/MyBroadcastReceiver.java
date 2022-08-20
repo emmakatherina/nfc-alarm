@@ -18,6 +18,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         // we will use vibrator first
+        // TODO prolong vibration
         vibrator = (Vibrator) context.getSystemService(context.VIBRATOR_SERVICE);
         vibrator.vibrate(4000);
 

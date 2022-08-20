@@ -19,6 +19,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     Button scan;
     Button check;
     Button request;
-    private static final int PERMISSION_REQUEST_CODE = 200;
+    private static final int PERMISSION_REQUEST_CODE = 3;
     public static PendingIntent pendingIntent;
     public static AlarmManager alarmManager;
 
@@ -50,49 +51,25 @@ public class MainActivity extends AppCompatActivity {
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         // Listen to buttons
-        start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startAlert();
-            }
-        });
-
-        scan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                stopAlert(MainActivity.this);
-            }
-        });
-
-        check.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                check();
-            }
-        });
-
-        request.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                request();
-            }
-        });
+        start.setOnClickListener(view -> startAlert());
+        scan.setOnClickListener(view -> stopAlert(MainActivity.this));
+        check.setOnClickListener(view -> check());
+        request.setOnClickListener(view -> request());
     }
 
     public void startAlert() {
-        EditText text = findViewById(R.id.time);
-        int i = Integer.parseInt(text.getText().toString());
+        EditText seconds = findViewById(R.id.time);
+        int i = Integer.parseInt(seconds.getText().toString());
 
         Intent intent = new Intent(this, MyBroadcastReceiver.class);
-        this.pendingIntent = PendingIntent.getBroadcast(
-                this.getApplicationContext(), 234324243, intent, 0);
+        this.pendingIntent = PendingIntent.getBroadcast(this.getApplicationContext(), 234324243, intent, PendingIntent.FLAG_IMMUTABLE);
 
         alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()
                 + (i * 1000), pendingIntent);
         Toast.makeText(this, "Alarm set in " + i + " seconds", Toast.LENGTH_LONG).show();
 
-        Intent switchIntent = new Intent(MainActivity.this, MainActivity2.class);
-        startActivity(switchIntent);
+        /* Intent switchIntent = new Intent(MainActivity.this, MainActivity2.class);
+        startActivity(switchIntent); */
     }
 
     // disable muting the alarm!
@@ -116,12 +93,11 @@ public class MainActivity extends AppCompatActivity {
         int result2 = ContextCompat.checkSelfPermission(getApplicationContext(), SCHEDULE_EXACT_ALARM);
         int result3 = ContextCompat.checkSelfPermission(getApplicationContext(), NFC);
 
-        return (result1 == PackageManager.PERMISSION_GRANTED) & (result2 == PackageManager.PERMISSION_GRANTED)
-                & (result3 == PackageManager.PERMISSION_GRANTED);
+        return (result1 == PackageManager.PERMISSION_GRANTED) & (result2 == PackageManager.PERMISSION_GRANTED) & (result3 == PackageManager.PERMISSION_GRANTED);
     }
 
     public void request() {
-        if (true) { // (!checkPermission()) {
+        if (!checkPermission()) {
             requestPermission();
         } else {
             Toast.makeText(this, "Permission already granted.",Toast.LENGTH_LONG).show();
@@ -129,9 +105,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void requestPermission() {
-        // ActivityCompat.requestPermissions(this, new String[]{CAMERA}, PERMISSION_REQUEST_CODE);
-        ActivityCompat.requestPermissions(this, new String[]{SCHEDULE_EXACT_ALARM}, PERMISSION_REQUEST_CODE);
-        ActivityCompat.requestPermissions(this, new String[]{NFC}, PERMISSION_REQUEST_CODE);
+        ActivityCompat.requestPermissions(this, new String [] {
+                SCHEDULE_EXACT_ALARM, NFC, VIBRATE
+            }, PERMISSION_REQUEST_CODE);
     }
 
 }
