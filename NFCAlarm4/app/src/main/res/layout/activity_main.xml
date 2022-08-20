@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:rowCount="4"
+    android:rowCount="5"
     android:columnCount="2"
     android:stretchMode="columnWidth"
     tools:context="com.example.nfcalarm.MainActivity">
@@ -20,9 +20,9 @@
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="0"
-            android:layout_margin="10pt"
-            android:layout_gravity="center|right"
             android:layout_columnWeight="1"
+            android:layout_gravity="center|right"
+            android:layout_margin="10pt"
             android:text="Alarm Time" />
 
         <EditText
@@ -31,9 +31,9 @@
             android:layout_height="wrap_content"
             android:layout_row="0"
             android:layout_column="1"
-            android:layout_margin="10pt"
-            android:layout_gravity="center"
             android:layout_columnWeight="1"
+            android:layout_gravity="center"
+            android:layout_margin="10pt"
             android:ems="8" />
 
         <TextView
@@ -41,8 +41,8 @@
             android:layout_height="wrap_content"
             android:layout_row="1"
             android:layout_column="0"
-            android:layout_margin="10pt"
             android:layout_gravity="center|right"
+            android:layout_margin="10pt"
             android:text="Associated Number" />
 
         <EditText
@@ -51,8 +51,8 @@
             android:layout_height="wrap_content"
             android:layout_row="1"
             android:layout_column="1"
-            android:layout_margin="10pt"
             android:layout_gravity="center"
+            android:layout_margin="10pt"
             android:ems="8" />
 
         <Button
@@ -61,8 +61,8 @@
             android:layout_height="wrap_content"
             android:layout_row="2"
             android:layout_column="1"
-            android:layout_margin="10pt"
             android:layout_gravity="top|right"
+            android:layout_margin="10pt"
             android:text="Start" />
 
         <Button
@@ -71,9 +71,31 @@
             android:layout_height="wrap_content"
             android:layout_row="3"
             android:layout_column="1"
-            android:layout_margin="10pt"
             android:layout_gravity="top|right"
+            android:layout_margin="10pt"
             android:text="Stop" />
+
+        <Button
+            android:id="@+id/check_permission"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="4"
+            android:layout_column="0"
+            android:layout_gravity="top|right"
+            android:layout_margin="10pt"
+            android:ems="8"
+            android:text="Check Permission" />
+
+        <Button
+            android:id="@+id/request_permission"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="4"
+            android:layout_column="1"
+            android:layout_gravity="top|right"
+            android:layout_margin="10pt"
+            android:ems="8"
+            android:text="Request Permission" />
 
     </GridLayout>
 </RelativeLayout>
